@@ -1,5 +1,6 @@
+import Canvas from "@/app/components/Canvas";
 import axios from "axios";
-import Image from "next/image";
+
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -17,13 +18,7 @@ export default async function PostPage({ params }: Props) {
 
   return (
     <div>
-      <p>{meme.name}</p>
-      <Image
-        src={meme.url}
-        width={meme.width}
-        height={meme.height}
-        alt={meme.name}
-      />
+      < Canvas meme={meme}/>
     </div>
   );
 }

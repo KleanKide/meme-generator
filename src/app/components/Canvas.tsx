@@ -24,23 +24,22 @@ function Canvas({ meme }: Mems) {
   const [arrValue, setArrValue] = useState<IInput[]>([]);
   const sensors = useSensors(useSensor(PointerSensor));
 
-
-  console.log(arrValue)
+  console.log(arrValue);
   function handleDragEnd(event) {
-  const { active, delta } = event;
+    const { active, delta } = event;
 
-  setArrValue((prev) =>
-    prev.map((item) =>
-      item.id === active.id
-        ? {
-            ...item,
-            x: item.x + delta.x,
-            y: item.y + delta.y,
-          }
-        : item
-    )
-  );
-}
+    setArrValue((prev) =>
+      prev.map((item) =>
+        item.id === active.id
+          ? {
+              ...item,
+              x: item.x + delta.x,
+              y: item.y + delta.y,
+            }
+          : item,
+      ),
+    );
+  }
 
   return (
     <div>
@@ -52,9 +51,9 @@ function Canvas({ meme }: Mems) {
         alt={meme.name}
       />
       <div>
-<DndContext sensors={sensors} onDragEnd={handleDragEnd}>
-  <Drag arrValue={arrValue} setArrValue={setArrValue} />
-</DndContext>
+        <DndContext sensors={sensors} onDragEnd={handleDragEnd}>
+          <Drag arrValue={arrValue} setArrValue={setArrValue} />
+        </DndContext>
       </div>
     </div>
   );

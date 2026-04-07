@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { IMems } from "../memes/page";
 import Image from "next/image";
 import {
@@ -25,7 +25,7 @@ function Canvas({ meme }: Mems) {
   const sensors = useSensors(useSensor(PointerSensor));
 
   console.log(arrValue);
-  function handleDragEnd(event) {
+  function handleDragEnd(event: { active: any; delta: any }) {
     const { active, delta } = event;
 
     setArrValue((prev) =>

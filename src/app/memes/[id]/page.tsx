@@ -1,16 +1,21 @@
+"use client";
 import Canvas from "@/app/components/Canvas";
-import axios from "axios";
+import { useEffect } from "react";
+import { useStore } from "../../store/store";
+import { useParams } from "next/navigation";
 
+export default function Page() {
+  const params = useParams();
+  const gettingClientMemoById = useStore(
+    (state) => state.gettingClientMemo,
+  );
+  const memes = useStore((state) => state.memes);
 
-type Props = {
-  params: Promise<{ id: string }>;
-};
+  useEffect(() => {
+    gettingClientMemoById(params.id);
+  }, [gettingClientMemoById, params.id]);
 
-export default async function PostPage({ params }: Props) {
-  const { id } = await params;
-  const res = await axios.get(`https://api.imgflip.com/get_memes`);
-  const memes = res.data.data.memes;
-  const meme = memes.find((m: { id: string; }) => m.id === id);
+  const meme = memes.find((m: { id: string }) => m.id === params.id);
 
   if (!meme) {
     return <p>Meme not found</p>;
@@ -18,7 +23,7 @@ export default async function PostPage({ params }: Props) {
 
   return (
     <div>
-      < Canvas meme={meme}/>
+      <Canvas meme={meme} />
     </div>
   );
 }

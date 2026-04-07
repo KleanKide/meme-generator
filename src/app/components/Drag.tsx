@@ -1,6 +1,6 @@
 import { useDraggable } from "@dnd-kit/core";
 import { CSS } from "@dnd-kit/utilities";
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { IInput } from "./Canvas";
 
 interface DragProps {
@@ -46,14 +46,13 @@ function DraggableContent({ value, id, x, y }: DraggableContentProps) {
 }
 
 function Drag({ arrValue, setArrValue }: DragProps) {
-  const [selectedId, setSelectedId] = useState();
+  const [selectedId, setSelectedId] = useState<number>();
   const [value, setValue] = useState("");
 
-  function handleClick(id) {
+  function handleClick(id: number) {
     setSelectedId(id);
-    console.log("выбран ID", id);
   }
-  function handleChange(e) {
+  function handleChange(e: ChangeEvent<HTMLInputElement, HTMLInputElement>) {
     const event = e.target.value;
     setArrValue((prev) =>
       prev.map((el) => {

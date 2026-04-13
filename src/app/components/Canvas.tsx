@@ -1,7 +1,7 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { IMems } from "../memes/page";
-import Image from "next/image";
+// import Image from "next/image";
 import {
   DndContext,
   PointerSensor,
@@ -22,7 +22,31 @@ export interface IInput {
 
 function Canvas({ meme }: Mems) {
   const [arrValue, setArrValue] = useState<IInput[]>([]);
+  const [canvasCtx, setCanvasCtx] = useState(null);
   const sensors = useSensors(useSensor(PointerSensor));
+  const canvasRef = useRef(null);
+
+  useEffect(() => {
+    function draw() {
+      const canvas = canvasRef.current;
+      if (canvas.getContext) {
+        const ctx = canvas.getContext("2d");
+        const img = new Image();
+        img.src = meme.url;
+        img.onload = function () {
+          ctx.drawImage(img, 0, 0, 800, 600);
+           ctx.font = "48px serif";
+           ctx.fillStyle = "white";
+           ctx.textBaseline = "top";
+          arrValue.forEach(el=>ctx.fillText(el.value, el.x, el.y))
+          
+          setCanvasCtx(canvas);
+        };
+      }
+    }
+
+    draw();
+  }, [arrValue, meme.url]);
 
   console.log(arrValue);
   function handleDragEnd(event: { active: any; delta: any }) {
@@ -44,12 +68,9 @@ function Canvas({ meme }: Mems) {
   return (
     <div>
       <p>{meme.name}</p>
-      <Image
-        src={meme.url}
-        width={meme.width}
-        height={meme.height}
-        alt={meme.name}
-      />
+        <canvas ref={canvasRef} width={800} height={900}>
+        {" "}
+      </canvas>
       <div>
         <DndContext sensors={sensors} onDragEnd={handleDragEnd}>
           <Drag arrValue={arrValue} setArrValue={setArrValue} />

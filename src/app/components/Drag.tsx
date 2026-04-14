@@ -1,110 +1,76 @@
-import { useDraggable } from "@dnd-kit/core";
-import { CSS } from "@dnd-kit/utilities";
-import { ChangeEvent, useState } from "react";
 import { IInput } from "./Canvas";
 
 interface DragProps {
   arrValue: IInput[];
-  setArrValue: React.Dispatch<React.SetStateAction<IInput[]>>;
+  selectedId: number | null;
+  draftValue: string;
+  onSelect: (id: number) => void;
+  onDraftChange: (value: string) => void;
+  onDraftBlur: () => void;
+  handleDelete: (id: number) => void;
 }
 
-interface DraggableContentProps {
-  value: string | number;
-  id: number;
-  x: number;
-  y: number;
-}
-
-function DraggableContent({ value, id, x, y }: DraggableContentProps) {
-  const { attributes, listeners, setNodeRef, transform, isDragging } =
-    useDraggable({
-      id,
-    });
-
-  const style = {
-    left: x,
-    top: y,
-    transform: CSS.Translate.toString(transform),
-  };
-
+function Drag({
+  arrValue,
+  selectedId,
+  draftValue,
+  onSelect,
+  onDraftChange,
+  onDraftBlur,
+  handleDelete,
+}: DragProps) {
   return (
-    <>
-      <div
-        ref={setNodeRef}
-        className={`
-  absolute  w-20 h-20 text-white flex items-center justify-center cursor-grab select-none text-5xl
-  ${value ? "bg-gray-0" : "bg-gray-300"}
-`}
-        style={style}
-        {...listeners}
-        {...attributes}
-      >
-        {value}
-      </div>
-    </>
-  );
-}
+    <div className="space-y-4">
+      <div className="space-y-2">
+        <p className="text-xs font-bold uppercase tracking-[0.16em] text-[var(--muted)]">
+          Layers
+        </p>
+        <div className="space-y-2">
+          {arrValue.length === 0 ? (
+            <div className="rounded-2xl border border-dashed border-[var(--line)] px-4 py-5 text-sm leading-6 text-[var(--muted)]">
+              Пока нет ни одного текстового слоя. Нажми `Add text`, и он сразу
+              появится здесь и на канвасе.
+            </div>
+          ) : null}
 
-function Drag({ arrValue, setArrValue }: DragProps) {
-  const [selectedId, setSelectedId] = useState<number>();
-  const [value, setValue] = useState("");
-
-  function handleClick(id: number) {
-    setSelectedId(id);
-  }
-  function handleChange(e: ChangeEvent<HTMLInputElement, HTMLInputElement>) {
-    const event = e.target.value;
-    setArrValue((prev) =>
-      prev.map((el) => {
-        if (el.id === selectedId)
-          return {
-            ...el,
-            value: event,
-          };
-        return el;
-      }),
-    );
-  }
-
-  function handleCreateBox() {
-    setArrValue((prev) => [
-      ...prev,
-      {
-        value: value,
-        id: Date.now(),
-        x: 20,
-        y: 20,
-      },
-    ]);
-  }
-
-  return (
-    <>
-      <button onClick={handleCreateBox}>Button</button>
-
-      {arrValue.map((el) => (
-        <div
-          className=" w-50 h-10  m-5 cursor-pointer border-none bg-gray-400 flex"
-          key={el.id}
-          onClick={() => handleClick(el.id)}
-        >
-          <DraggableContent
-            key={el.id}
-            value={el.value}
-            id={el.id}
-            x={el.x}
-            y={el.y}
-          />
-          {el.value}
+          {arrValue.map((el, index) => (
+            <div key={el.id} className="flex items-center gap-2">
+              <button
+                type="button"
+                className={`block w-full rounded-2xl border px-4 py-3 text-left transition ${
+                  selectedId === el.id
+                    ? "border-[var(--accent)] bg-[var(--accent-soft)]"
+                    : "border-[var(--line)] bg-white/65 hover:bg-white"
+                }`}
+                onClick={() => onSelect(el.id)}
+              >
+                <span className="block text-xs font-bold uppercase tracking-[0.14em] text-[var(--muted)]">
+                  Layer {index + 1}
+                </span>
+                <span className="mt-1 block text-sm font-semibold text-[var(--ink)]">
+                  {el.value || "Empty text"}
+                </span>
+              </button>
+              <button
+                type="button"
+                onClick={() => handleDelete(el.id)}
+                className="rounded-full border border-[var(--line)] px-3 py-2 text-sm font-semibold text-[var(--muted)] transition hover:border-[var(--accent)] hover:text-[var(--accent-strong)]"
+              >
+                Delete
+              </button>
+            </div>
+          ))}
         </div>
-      ))}
+      </div>
       <input
         type="text"
-        className="outline"
-        value={arrValue.find((el) => el.id === selectedId)?.value || ""}
-        onChange={(e) => handleChange(e)}
+        className="brand-input"
+        value={draftValue}
+        onChange={(e) => onDraftChange(e.target.value)}
+        onBlur={onDraftBlur}
+        placeholder="Type text and click outside"
       />
-    </>
+    </div>
   );
 }
 

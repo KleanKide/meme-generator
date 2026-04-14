@@ -1,16 +1,17 @@
-import React from 'react'
+import React from "react";
 
 type Props = {
-    children?: React.ReactNode
-}
+  children?: React.ReactNode;
+};
 
-function Wrapper({children}: Props) {
+function Wrapper({ children }: Props) {
   return (
-    <div className="flex justify-center items-center h-screen">
-        <div className='border-y-8 border-x-2 border-indigo-500 w-200 h-200  '>{children}</div>
-    </div>
-    
-  )
+    <section className="shell">
+      <div className="panel overflow-hidden rounded-[2rem] border px-4 py-4 md:px-6 md:py-6">
+        {children}
+      </div>
+    </section>
+  );
 }
 
-export default Wrapper
+export default Wrapper;

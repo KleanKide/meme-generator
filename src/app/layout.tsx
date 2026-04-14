@@ -1,6 +1,6 @@
-import Header from './components/Header';
-import Wrapper from './components/Wrapper';
-import './globals.css'
+import Header from "./components/Header";
+import "./globals.css";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -8,9 +8,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>
-        <Header/>
-        {children}
+      <body className="antialiased">
+        <div className="relative min-h-screen pb-12">
+          <Header />
+          <main className="pt-6 md:pt-10">{children}</main>
+        </div>
       </body>
     </html>
   );

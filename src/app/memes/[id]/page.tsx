@@ -57,8 +57,8 @@ export default function Page() {
         </p>
         <h1 className="text-3xl font-black md:text-5xl">{meme.name}</h1>
         <p className="max-w-2xl text-base leading-7 text-[var(--muted)]">
-          Добавляй подписи, двигай их прямо на холсте и сохраняй итоговое
-          изображение одной кнопкой.
+          Add captions, drag them directly on the canvas, and save the finished
+          image with one click.
         </p>
       </div>
       <MemeCanvasEditor meme={meme} />

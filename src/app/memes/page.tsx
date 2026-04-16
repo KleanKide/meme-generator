@@ -24,11 +24,11 @@ export default function Home() {
           Templates
         </p>
         <h1 className="text-4xl font-black md:text-5xl">
-          Выбери основу для следующего мема.
+          Pick the base for your next meme.
         </h1>
         <p className="max-w-2xl text-base leading-7 text-[var(--muted)]">
-          Здесь собраны шаблоны из `imgflip`. Нажми на карточку, и сразу
-          откроется редактор с холстом и управлением текстом.
+          Browse meme templates from `imgflip`. Click any card to open the
+          editor with the canvas and caption controls ready to go.
         </p>
       </div>
 

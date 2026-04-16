@@ -12,12 +12,12 @@ async function page() {
             Meme generator playground
           </p>
           <h1 className="max-w-3xl text-4xl font-black leading-tight md:text-6xl">
-            Делай мемы быстро, чисто и без лишней боли в интерфейсе.
+            Make memes fast, clean, and without fighting the interface.
           </h1>
           <p className="max-w-2xl text-lg leading-8 text-[var(--muted)]">
-            Открой шаблон, расставь подписи прямо на холсте и сразу сохрани
-            готовую картинку. Здесь всё собрано вокруг одного сценария:
-            выбрать, написать, подвигать, скачать.
+            Open a template, place captions directly on the canvas, and save the
+            final image right away. The whole app is focused on one simple flow:
+            choose, type, drag, download.
           </p>
           <div className="flex flex-wrap gap-3">
             <Link href="/memes" className="brand-button brand-button--accent">

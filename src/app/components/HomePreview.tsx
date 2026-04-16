@@ -49,23 +49,21 @@ function HomePreview() {
           Start Simple
         </p>
         <h2 className="text-3xl font-black leading-tight md:text-5xl">
-          Сделай свой первый мем и открой редактор одним кликом.
+          Build your first meme and jump into the editor in one click.
         </h2>
         <p className="max-w-xl text-base leading-7 text-[var(--muted)]">
-          Мы показываем один готовый шаблон для старта, а дальше ты просто
-          переходишь в список и выбираешь любой мем из коллекции.
+          Start with a ready-made preview, then head to the template gallery and
+          pick any meme from the collection to customize.
         </p>
         <div className="flex flex-wrap gap-3">
           <Link href="/memes" className="brand-button brand-button--accent">
-            Открыть шаблоны
+            Open templates
           </Link>
         </div>
       </div>
 
       <div className="panel demo-float overflow-hidden rounded-[1.75rem] p-3">
         <div className="overflow-hidden rounded-[1.35rem] border border-white/60 bg-[#2a1f18] p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]">
-
-
           <canvas
             ref={canvasRef}
             width={710}

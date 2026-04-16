@@ -76,8 +76,6 @@ function MemeCanvasEditor({ meme }: Mems) {
       y: 40,
     };
 
-
-
     setArrValue((prev) => [...prev, newItem]);
     setSelectedId(newItem.id);
     setDraftValue(newItem.value);
@@ -213,8 +211,8 @@ function MemeCanvasEditor({ meme }: Mems) {
           </p>
           <h2 className="text-2xl font-black">Edit your caption layers</h2>
           <p className="text-sm leading-6 text-[var(--muted)]">
-            Нажми на текст на холсте или в списке справа, измени значение в
-            поле и кликни вне инпута, чтобы применить его.
+            Click a caption on the canvas or in the layer list, edit the text in
+            the input, then click outside the field to apply the change.
           </p>
         </div>
         <div className="flex flex-wrap gap-3">

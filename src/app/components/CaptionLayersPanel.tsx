@@ -28,8 +28,8 @@ function CaptionLayersPanel({
         <div className="space-y-2">
           {arrValue.length === 0 ? (
             <div className="rounded-2xl border border-dashed border-[var(--line)] px-4 py-5 text-sm leading-6 text-[var(--muted)]">
-              Пока нет ни одного текстового слоя. Нажми `Add text`, и он сразу
-              появится здесь и на канвасе.
+              No caption layers yet. Click `Add text` and a new layer will show
+              up here and on the canvas immediately.
             </div>
           ) : null}
 

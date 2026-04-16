@@ -1,6 +1,6 @@
-import { IInput } from "./Canvas";
+import { IInput } from "./MemeCanvasEditor";
 
-interface DragProps {
+interface CaptionLayersPanelProps {
   arrValue: IInput[];
   selectedId: number | null;
   draftValue: string;
@@ -10,7 +10,7 @@ interface DragProps {
   handleDelete: (id: number) => void;
 }
 
-function Drag({
+function CaptionLayersPanel({
   arrValue,
   selectedId,
   draftValue,
@@ -18,7 +18,7 @@ function Drag({
   onDraftChange,
   onDraftBlur,
   handleDelete,
-}: DragProps) {
+}: CaptionLayersPanelProps) {
   return (
     <div className="space-y-4">
       <div className="space-y-2">
@@ -74,4 +74,4 @@ function Drag({
   );
 }
 
-export default Drag;
+export default CaptionLayersPanel;

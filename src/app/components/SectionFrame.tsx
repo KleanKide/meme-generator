@@ -4,7 +4,7 @@ type Props = {
   children?: React.ReactNode;
 };
 
-function Wrapper({ children }: Props) {
+function SectionFrame({ children }: Props) {
   return (
     <section className="shell">
       <div className="panel overflow-hidden rounded-[2rem] border px-4 py-4 md:px-6 md:py-6">
@@ -14,4 +14,4 @@ function Wrapper({ children }: Props) {
   );
 }
 
-export default Wrapper;
+export default SectionFrame;

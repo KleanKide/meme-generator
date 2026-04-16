@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
-import Wrapper from "./components/Wrapper";
-import HomePage from "./components/HomePage";
+import SectionFrame from "./components/SectionFrame";
+import HomePreview from "./components/HomePreview";
 
 async function page() {
   return (
@@ -57,11 +57,11 @@ async function page() {
           </div>
         </div>
       </section>
-      <Wrapper>
+      <SectionFrame>
         <div id="preview">
-          <HomePage />
+          <HomePreview />
         </div>
-      </Wrapper>
+      </SectionFrame>
     </div>
   );
 }

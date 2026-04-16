@@ -1,21 +1,43 @@
 "use client";
-import Canvas from "@/app/components/Canvas";
+import MemeCanvasEditor from "@/app/components/MemeCanvasEditor";
 import { useEffect } from "react";
 import { useStore } from "../../store/store";
 import { useParams } from "next/navigation";
 
 export default function Page() {
   const params = useParams<{ id: string }>();
-  const gettingClientMemoById = useStore(
-    (state) => state.gettingClientMemo,
-  );
+  const fetchMemes = useStore((state) => state.fetchMemes);
   const memes = useStore((state) => state.memes);
+  const isLoading = useStore((state) => state.isLoading);
+  const error = useStore((state) => state.error);
 
   useEffect(() => {
-    void gettingClientMemoById();
-  }, [gettingClientMemoById]);
+    if (memes.length === 0) {
+      void fetchMemes();
+    }
+  }, [fetchMemes, memes.length]);
 
   const meme = memes.find((m: { id: string }) => m.id === params.id);
+
+  if (isLoading && memes.length === 0) {
+    return (
+      <section className="shell pb-12">
+        <div className="panel rounded-[2rem] px-6 py-12 text-center">
+          <p className="text-lg font-semibold">Loading meme...</p>
+        </div>
+      </section>
+    );
+  }
+
+  if (error) {
+    return (
+      <section className="shell pb-12">
+        <div className="panel rounded-[2rem] px-6 py-12 text-center">
+          <p className="text-lg font-semibold">{error}</p>
+        </div>
+      </section>
+    );
+  }
 
   if (!meme) {
     return (
@@ -39,7 +61,7 @@ export default function Page() {
           изображение одной кнопкой.
         </p>
       </div>
-      <Canvas meme={meme} />
+      <MemeCanvasEditor meme={meme} />
     </section>
   );
 }

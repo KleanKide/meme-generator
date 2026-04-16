@@ -2,14 +2,12 @@
 import Link from "next/link";
 import React, { useEffect, useRef } from "react";
 
-type Props = {};
-
 const previewMeme = {
   name: "One Does Not Simply",
   url: "https://i.imgflip.com/1bij.jpg",
 };
 
-function HomePage({}: Props) {
+function HomePreview() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   useEffect(() => {
@@ -82,4 +80,4 @@ function HomePage({}: Props) {
   );
 }
 
-export default HomePage;
+export default HomePreview;

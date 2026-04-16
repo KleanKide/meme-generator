@@ -1,7 +1,7 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useEffectEvent, useRef, useState } from "react";
 import type { Meme } from "@/types/meme";
-import Drag from "./Drag";
+import CaptionLayersPanel from "./CaptionLayersPanel";
 
 type Mems = {
   meme: Meme;
@@ -14,7 +14,7 @@ export interface IInput {
   y: number;
 }
 
-function Canvas({ meme }: Mems) {
+function MemeCanvasEditor({ meme }: Mems) {
   const [arrValue, setArrValue] = useState<IInput[]>([]);
   const [selectedId, setSelectedId] = useState<number | null>(null);
   const [draftValue, setDraftValue] = useState("");
@@ -23,21 +23,7 @@ function Canvas({ meme }: Mems) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const imageRef = useRef<HTMLImageElement | null>(null);
 
-  useEffect(() => {
-    const img = new Image();
-    img.crossOrigin = "anonymous";
-    img.src = meme.url;
-    img.onload = () => {
-      imageRef.current = img;
-      drawCanvas();
-    };
-  }, [meme.url]);
-
-  useEffect(() => {
-    drawCanvas();
-  }, [arrValue, meme.url]);
-
-  function drawCanvas() {
+  const drawCanvas = useEffectEvent(() => {
     const canvas = canvasRef.current;
     const ctx = canvas?.getContext("2d");
     const img = imageRef.current;
@@ -55,7 +41,21 @@ function Canvas({ meme }: Mems) {
       ctx.strokeText(el.value, el.x, el.y);
       ctx.fillText(el.value, el.x, el.y);
     });
-  }
+  });
+
+  useEffect(() => {
+    const img = new Image();
+    img.crossOrigin = "anonymous";
+    img.src = meme.url;
+    img.onload = () => {
+      imageRef.current = img;
+      drawCanvas();
+    };
+  }, [meme.url]);
+
+  useEffect(() => {
+    drawCanvas();
+  }, [arrValue, meme.url]);
 
   function handleSave() {
     const canvas = canvasRef.current;
@@ -228,7 +228,7 @@ function Canvas({ meme }: Mems) {
             Add text
           </button>
         </div>
-        <Drag
+        <CaptionLayersPanel
           arrValue={arrValue}
           selectedId={selectedId}
           draftValue={draftValue}
@@ -242,4 +242,4 @@ function Canvas({ meme }: Mems) {
   );
 }
 
-export default Canvas;
+export default MemeCanvasEditor;

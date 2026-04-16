@@ -6,12 +6,16 @@ import { useStore } from "../store/store";
 import type { Meme } from "@/types/meme";
 
 export default function Home() {
-  const gettingClientMemo = useStore((state) => state.gettingClientMemo);
+  const fetchMemes = useStore((state) => state.fetchMemes);
   const memes = useStore((state) => state.memes);
+  const isLoading = useStore((state) => state.isLoading);
+  const error = useStore((state) => state.error);
 
   useEffect(() => {
-    void gettingClientMemo();
-  }, [gettingClientMemo]);
+    if (memes.length === 0) {
+      void fetchMemes();
+    }
+  }, [fetchMemes, memes.length]);
 
   return (
     <section className="shell space-y-8 pb-12">
@@ -29,6 +33,18 @@ export default function Home() {
       </div>
 
       <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
+        {isLoading && memes.length === 0 ? (
+          <div className="panel rounded-[1.75rem] px-5 py-6 text-sm text-[var(--muted)]">
+            Loading meme templates...
+          </div>
+        ) : null}
+
+        {error ? (
+          <div className="panel rounded-[1.75rem] px-5 py-6 text-sm text-[var(--accent-strong)]">
+            {error}
+          </div>
+        ) : null}
+
         {memes.map((meme: Meme) => (
           <Link
             key={meme.id}
